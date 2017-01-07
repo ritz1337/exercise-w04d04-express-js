@@ -56,17 +56,51 @@ app.get('/visitors', function(req, res){
 
 // GET '/visitors.json'
   // send a list of all the names from '/greet/:name' as json
+app.get('/visitors.json', function(req, res) { //there is no json file, it's just a url
+  res.json(names);
+})
+
 
 // Respond to any
 // GET '/trip?to=paris'
 // GET '/trip?to=rome'
+app.get('/trip', function(req, res){
+  var place = req.query.to; //whatever is inputted after ?to=
+
   // send a 302 redirect to '/visiting/:place'
 
+  res.redirect('/visiting/' + place);
+
+});
+
+// locVisited = {
+//   Italy: {
+//     Counter: 4
+//   }
+//   France: {
+//     Counter: 5
+//   }
+// }
+
+// locVisited = {
+//   Italy:
+// }
+
+var places = {}
+
 // Respond to...
+app.get('/visiting/:place', function(req,res){
+  var place = req.params.place;
+  places[place] = places[place] || 0; //if the place key is
+  places[place]++;
+  res.send('i am in ' + place + ' for the ' + places[place] + ' time!'); //because place is whatever is typed in the url after /visiting
+})
 // GET '/visiting/paris'
 // GET '/visiting/rome'
   // render You are visiting [place] you have been here [number] of times
+app.get('/visiting/:place', function(req,res){
 
+})
 // Respond to EITHER
 // GET '/visits'
 // GET '/visits.json'
