@@ -81,6 +81,18 @@ app.get('/visiting/:place', function(req, res) {
 // GET '/visits.json'
   // render an HTML table that shows the places visited and number of times
   // render JSON
+app.get('/visits?(:format)', function(req, res) {
+  if (req.params.format === '.json') {
+    return res.json(places);
+  }
+  var html = '<table><tr><td>Place</td><td>Visits</td></tr>';
+  for (var place in places) {
+    var count = places[place];
+    html += '<tr><td>' + place + '</td><td>' + count + '</td></tr>';
+  }
+  html += '</table>';
+  res.send(html);
+})
 
 var port = 3000;
 app.listen(port, function(){
